@@ -6,7 +6,7 @@ import re
 from datetime import datetime, date
 
 # Configuration de l'API
-API_RAG_URL = "http://127.0.0.1:8000/rag-chat"
+API_RAG_URL = "https://chat-services.sandbox.gouv.tg"
 
 st.set_page_config(page_title="Gouv Bot", layout="wide")
 st.title("Gouv Bot")
