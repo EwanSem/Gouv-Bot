@@ -4,9 +4,12 @@ import json
 import base64
 import re
 from datetime import datetime, date
+import config
+from dotenv import load_dotenv
+load_dotenv()
 
 # Configuration de l'API
-API_RAG_URL = "https://chat-services.sandbox.gouv.tg/rag-chat"
+API_RAG_URL = "http://127.0.0.1:8000/rag-chat"
 
 st.set_page_config(page_title="Gouv Bot", layout="wide")
 st.title("Gouv Bot")
@@ -70,16 +73,17 @@ def get_rag_response(question: str, history: list, state: dict, images_base64: l
         "question": question,
         "history": history,
         "platform": platform,
-        "stream": False,
+        "stream": True,
         "state": state,
         "images_base64": images_base64
     }
     try:
-        response = requests.post(API_RAG_URL, json=payload)
+        headers = {config.API_KEY_NAME: config.CHATBOT_SP_TV_IA_SECRET_TOKEN}
+        response = requests.post(API_RAG_URL, json=payload, headers=headers)
         response.raise_for_status()
         return response.json()
     except Exception as e:
-        return {"answer": f"Erreur: {str(e)}", "sources": [], "state": state}
+        return {"answer": f"Erreur d'authentification ou réseau : {str(e)}", "sources": [], "state": state}
 
 # --- Layout Principal ---
 # On affiche les messages dans le flux principal
