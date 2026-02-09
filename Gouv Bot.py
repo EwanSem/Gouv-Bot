@@ -4,12 +4,14 @@ import json
 import base64
 import re
 from datetime import datetime, date
-import config
 from dotenv import load_dotenv
 load_dotenv()
 
+CHATBOT_SP_TV_IA_SECRET_TOKEN="votre_token_secret_ici"
+API_KEY_NAME = "access_token"
+
 # Configuration de l'API
-API_RAG_URL = "http://127.0.0.1:8000/rag-chat"
+API_RAG_URL = "https://chat-services.sandbox.gouv.tg/rag-chat"
 
 st.set_page_config(page_title="Gouv Bot", layout="wide")
 st.title("Gouv Bot")
@@ -78,7 +80,7 @@ def get_rag_response(question: str, history: list, state: dict, images_base64: l
         "images_base64": images_base64
     }
     try:
-        headers = {config.API_KEY_NAME: config.CHATBOT_SP_TV_IA_SECRET_TOKEN}
+        headers = {API_KEY_NAME: CHATBOT_SP_TV_IA_SECRET_TOKEN}
         response = requests.post(API_RAG_URL, json=payload, headers=headers)
         response.raise_for_status()
         return response.json()
