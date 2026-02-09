@@ -4,8 +4,6 @@ import json
 import base64
 import re
 from datetime import datetime, date
-from dotenv import load_dotenv
-load_dotenv()
 
 CHATBOT_SP_TV_IA_SECRET_TOKEN="votre_token_secret_ici"
 API_KEY_NAME = "access_token"
